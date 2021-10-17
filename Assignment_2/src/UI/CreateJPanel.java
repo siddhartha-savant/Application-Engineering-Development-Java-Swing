@@ -1,0 +1,804 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package UI;
+
+import Model.Car;
+import Model.FleetOfCars;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Locale;
+import javax.swing.JFileChooser;
+import java.util.*; 
+
+/**
+ *
+ * @author siddharthasavant
+ */
+public class CreateJPanel extends javax.swing.JPanel {
+
+    /**
+     * Creates new form CreateJPanel
+     */
+    
+    private JPanel rightPane;
+    private FleetOfCars fleet;
+    private LocalDate localDate;
+    Instant now = Instant.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withLocale(Locale.getDefault()).withZone(ZoneId.systemDefault());
+    
+    public CreateJPanel(JPanel rightPane, FleetOfCars fleet) {
+        initComponents();
+        this.rightPane = rightPane;
+        this.fleet = fleet;
+        this.yes.setActionCommand("Yes");
+        this.valid.setActionCommand("Valid");
+        this.no.setActionCommand("No");
+        this.expired.setActionCommand("Expired");
+        this.localDate = LocalDate.now();
+    }
+    
+    private void readFromCSV(String fileName) {
+        Path pathToFile = Paths.get(fileName);
+        try (BufferedReader br = Files.newBufferedReader(pathToFile,
+                StandardCharsets.US_ASCII)) {
+
+            String line = br.readLine();
+
+            while (line != null) {
+                String[] attributes = line.split(",");
+                Car car = createCar(attributes);
+                if(car == null){
+                    return;
+                }
+                fleet.addCar(car);
+                line = br.readLine();
+            }
+            
+            JOptionPane.showMessageDialog(null, "CSV successfully uploaded");
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+    
+    private Car createCar(String[] metadata) {
+        try{
+            String manufactureName = metadata[0];
+            String carName = metadata[1];
+            String modelName = metadata[2];
+            int yearOfManufacture = Integer.parseInt(metadata[3]);
+            int numberOfSeats = Integer.parseInt(metadata[4]);
+            String serialNumberOfCar = metadata[5];
+            String companyName = metadata[6];
+            String cityName = metadata[7];
+            String maintainanceCertificate = metadata[8];
+            String availability = metadata[9];
+            boolean maintainanceCertificateBoolean;
+            boolean availabilityBoolean;
+
+            if(maintainanceCertificate.equals("Valid")){
+                 maintainanceCertificateBoolean = true;
+            }else{
+                 maintainanceCertificateBoolean = false;
+            }
+
+            if(availability.equals("Yes")){
+                 availabilityBoolean = true;
+            }else{
+                 availabilityBoolean = false;
+            }
+        
+            if(manufactureName.isEmpty() || carName.isEmpty() || modelName.isEmpty()
+                || serialNumberOfCar.isEmpty() || companyName.isEmpty() || cityName.isEmpty() || maintainanceCertificate.isEmpty()
+                || availability.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Enter Correct Data and try again");
+                return null;
+            }
+            
+            if(!fleet.getSet().add(serialNumberOfCar)){
+                JOptionPane.showMessageDialog(null, "Error: Enter unique Serial Number");
+                return null;
+            }
+            System.out.println(fleet.toString());
+            Car car = new Car();
+            car.setManufacturerName(manufactureName);
+            car.setCarName(carName);
+            car.setModelName(modelName);
+            car.setYearOfManufacture(yearOfManufacture);
+            car.setNumberOfSeats(numberOfSeats);
+            car.setSerialNumberOfCar(serialNumberOfCar);
+            car.setCompanyName(companyName);
+            car.setCityName(cityName);
+            car.setMaintainanceCertificate(maintainanceCertificateBoolean);
+            car.setAvailability(availabilityBoolean);
+            car.setDate(formatter.format(now));
+            return car;
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Enter Correct Data and try again");
+            return null;
+        }
+    }
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroupMC = new javax.swing.ButtonGroup();
+        buttonGroupA = new javax.swing.ButtonGroup();
+        jLabel1 = new javax.swing.JLabel();
+        lblManufacturerName = new javax.swing.JLabel();
+        txtManufacturerName = new javax.swing.JTextField();
+        lblCarName = new javax.swing.JLabel();
+        txtCarName = new javax.swing.JTextField();
+        lblModelName = new javax.swing.JLabel();
+        txtModelName = new javax.swing.JTextField();
+        lblYearOfManufacture = new javax.swing.JLabel();
+        lblNumberOfSeats = new javax.swing.JLabel();
+        txtNumberOfSeats = new javax.swing.JTextField();
+        lblSerialNumber = new javax.swing.JLabel();
+        txtSerialNumber = new javax.swing.JTextField();
+        lblCompanyName = new javax.swing.JLabel();
+        txtCompanyName = new javax.swing.JTextField();
+        lblMaintainanceCertificate = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        valid = new javax.swing.JRadioButton();
+        expired = new javax.swing.JRadioButton();
+        yes = new javax.swing.JRadioButton();
+        no = new javax.swing.JRadioButton();
+        btnCreateCar = new javax.swing.JButton();
+        txtCityName = new javax.swing.JTextField();
+        lblCityName = new javax.swing.JLabel();
+        txtYearOfManufacture = new com.toedter.calendar.JYearChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btnAddCSV = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(200, 219, 245));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(32, 37, 113));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Enter Car Details");
+
+        lblManufacturerName.setForeground(new java.awt.Color(32, 37, 113));
+        lblManufacturerName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblManufacturerName.setText("Manufacturer Name:");
+
+        txtManufacturerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtManufacturerNameActionPerformed(evt);
+            }
+        });
+        txtManufacturerName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtManufacturerNameKeyReleased(evt);
+            }
+        });
+
+        lblCarName.setForeground(new java.awt.Color(32, 37, 113));
+        lblCarName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCarName.setText("Car Name:");
+
+        txtCarName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCarNameActionPerformed(evt);
+            }
+        });
+        txtCarName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCarNameKeyReleased(evt);
+            }
+        });
+
+        lblModelName.setForeground(new java.awt.Color(32, 37, 113));
+        lblModelName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblModelName.setText("Model Name:");
+
+        txtModelName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModelNameActionPerformed(evt);
+            }
+        });
+        txtModelName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtModelNameKeyReleased(evt);
+            }
+        });
+
+        lblYearOfManufacture.setForeground(new java.awt.Color(32, 37, 113));
+        lblYearOfManufacture.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblYearOfManufacture.setText("Year of Manufacture:");
+
+        lblNumberOfSeats.setForeground(new java.awt.Color(32, 37, 113));
+        lblNumberOfSeats.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNumberOfSeats.setText("Number of Seats:");
+
+        txtNumberOfSeats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumberOfSeatsActionPerformed(evt);
+            }
+        });
+        txtNumberOfSeats.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumberOfSeatsKeyReleased(evt);
+            }
+        });
+
+        lblSerialNumber.setForeground(new java.awt.Color(32, 37, 113));
+        lblSerialNumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblSerialNumber.setText("Serial Number:");
+
+        txtSerialNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSerialNumberActionPerformed(evt);
+            }
+        });
+        txtSerialNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSerialNumberKeyReleased(evt);
+            }
+        });
+
+        lblCompanyName.setForeground(new java.awt.Color(32, 37, 113));
+        lblCompanyName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCompanyName.setText("Company Name:");
+
+        txtCompanyName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCompanyNameActionPerformed(evt);
+            }
+        });
+        txtCompanyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCompanyNameKeyReleased(evt);
+            }
+        });
+
+        lblMaintainanceCertificate.setForeground(new java.awt.Color(32, 37, 113));
+        lblMaintainanceCertificate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblMaintainanceCertificate.setText("Maintainance Certificate:");
+
+        jLabel10.setForeground(new java.awt.Color(32, 37, 113));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Availability:");
+
+        buttonGroupMC.add(valid);
+        valid.setText("Valid");
+
+        buttonGroupMC.add(expired);
+        expired.setText("Expired");
+
+        buttonGroupA.add(yes);
+        yes.setText("Yes");
+
+        buttonGroupA.add(no);
+        no.setText("No");
+
+        btnCreateCar.setBackground(new java.awt.Color(32, 37, 113));
+        btnCreateCar.setFont(new java.awt.Font("Lucida Grande", 1, 20)); // NOI18N
+        btnCreateCar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreateCar.setText("Create Car");
+        btnCreateCar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateCarActionPerformed(evt);
+            }
+        });
+
+        txtCityName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCityNameActionPerformed(evt);
+            }
+        });
+        txtCityName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCityNameKeyReleased(evt);
+            }
+        });
+
+        lblCityName.setForeground(new java.awt.Color(32, 37, 113));
+        lblCityName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCityName.setText("City Name:");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setText(" ");
+        jLabel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel2KeyReleased(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setText(" ");
+        jLabel3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel3KeyReleased(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setText(" ");
+        jLabel4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel4KeyReleased(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel5.setText(" ");
+        jLabel5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel5KeyReleased(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setText(" ");
+        jLabel6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel6KeyReleased(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText(" ");
+        jLabel7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel7KeyReleased(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setText(" ");
+
+        btnAddCSV.setBackground(new java.awt.Color(32, 37, 113));
+        btnAddCSV.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnAddCSV.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddCSV.setText("ADD CSV");
+        btnAddCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCSVActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblManufacturerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCarName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblModelName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblYearOfManufacture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNumberOfSeats, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSerialNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCompanyName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCityName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblMaintainanceCertificate, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCompanyName)
+                                    .addComponent(txtSerialNumber, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNumberOfSeats, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtManufacturerName)
+                                            .addComponent(txtModelName, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtYearOfManufacture, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                                            .addComponent(txtCarName, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtCityName))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(valid)
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(no)
+                                    .addComponent(expired)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(yes))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(btnAddCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(293, 293, 293)
+                        .addComponent(btnCreateCar, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtManufacturerName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblManufacturerName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCarName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCarName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtModelName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblModelName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblYearOfManufacture, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtYearOfManufacture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumberOfSeats, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberOfSeats, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCityName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCityName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMaintainanceCertificate, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(valid)
+                    .addComponent(expired))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yes)
+                    .addComponent(no))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreateCar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, lblCarName, lblCityName, lblCompanyName, lblMaintainanceCertificate, lblManufacturerName, lblModelName, lblNumberOfSeats, lblSerialNumber, lblYearOfManufacture});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCarName, txtCityName, txtCompanyName, txtManufacturerName, txtModelName, txtNumberOfSeats, txtSerialNumber});
+
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtManufacturerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManufacturerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtManufacturerNameActionPerformed
+
+    private void txtCarNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCarNameActionPerformed
+
+    private void txtModelNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModelNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModelNameActionPerformed
+
+    private void txtNumberOfSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumberOfSeatsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumberOfSeatsActionPerformed
+
+    private void txtSerialNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerialNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSerialNumberActionPerformed
+
+    private void txtCompanyNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCompanyNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCompanyNameActionPerformed
+
+    private void btnCreateCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateCarActionPerformed
+        // TODO add your handling code here:
+        String manufactureName = txtManufacturerName.getText();
+        String carName = txtCarName.getText();
+        String modelName = txtModelName.getText();
+        
+        int yearOfManufacture;
+        try{
+            yearOfManufacture = txtYearOfManufacture.getYear();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: Enter Correct Year");
+            return;
+        }
+        
+        int numberOfSeats;
+        try{
+            numberOfSeats = Integer.parseInt(txtNumberOfSeats.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: Enter Correct Number of Seats");
+            return;
+        }
+        String serialNumberOfCar = txtSerialNumber.getText();
+        String companyName = txtCompanyName.getText();
+        String cityName = txtCityName.getText();
+        boolean maintainanceCertificate;
+        boolean availability;
+        
+        try{
+            if(buttonGroupMC.getSelection().getActionCommand().equals("Valid")){
+                maintainanceCertificate = true;
+            }else{
+                maintainanceCertificate = false;
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: Please select an option");
+            return;
+        }
+        
+        try{
+            if(buttonGroupA.getSelection().getActionCommand().equals("Yes")){
+                availability = true;
+            }else{
+                availability = false;
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: Please select an option");
+            return;
+        }
+        
+        System.out.println(fleet.toString());
+        Car car = new Car();
+        car.setManufacturerName(manufactureName);
+        car.setCarName(carName);
+        car.setModelName(modelName);
+        car.setYearOfManufacture(yearOfManufacture);
+        car.setNumberOfSeats(numberOfSeats);
+        car.setSerialNumberOfCar(serialNumberOfCar);
+        car.setCompanyName(companyName);
+        car.setCityName(cityName);
+        car.setMaintainanceCertificate(maintainanceCertificate);
+        car.setAvailability(availability);
+        car.setDate(formatter.format(now));
+        
+        if(txtManufacturerName.getText().isEmpty() || txtModelName.getText().isEmpty() || txtCarName.getText().isEmpty()
+                || txtNumberOfSeats.getText().isEmpty() || txtSerialNumber.getText().isEmpty() || txtCompanyName.getText().isEmpty() || txtCityName.getText().isEmpty()
+                || jLabel2.getText()!=null || jLabel3.getText()!=null  || jLabel4.getText()!=null || jLabel5.getText()!=null 
+                || jLabel6.getText()!=null  || jLabel7.getText()!=null  || jLabel8.getText()!=null ){
+            JOptionPane.showMessageDialog(null, "Enter Correct Data and try again");
+            return;
+        }
+        
+        if(!fleet.getSet().add(serialNumberOfCar)){
+            JOptionPane.showMessageDialog(null, "Error: Enter unique Serial Number");
+            return;
+        }
+            
+        fleet.addCar(car);
+        JOptionPane.showMessageDialog(null, "Car Details Sucessfully Created");
+        txtManufacturerName.setText("");
+        txtCarName.setText("");
+        txtModelName.setText("");
+        txtYearOfManufacture.setValue(2000);
+        txtNumberOfSeats.setText("");
+        txtSerialNumber.setText("");
+        txtCompanyName.setText("");
+        txtCityName.setText("");
+        buttonGroupMC.clearSelection();
+        buttonGroupA.clearSelection();
+        
+    }//GEN-LAST:event_btnCreateCarActionPerformed
+
+    private void txtCityNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCityNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCityNameActionPerformed
+
+    private void jLabel2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel2KeyReleased
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_jLabel2KeyReleased
+
+    private void jLabel3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel3KeyReleased
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jLabel3KeyReleased
+
+    private void jLabel4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel4KeyReleased
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_jLabel4KeyReleased
+
+    private void jLabel5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel5KeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel5KeyReleased
+
+    private void jLabel6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel6KeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel6KeyReleased
+
+    private void jLabel7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel7KeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel7KeyReleased
+
+    private void txtManufacturerNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtManufacturerNameKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z]{0,30}$");
+        Matcher match = pattern.matcher(txtManufacturerName.getText());
+        boolean matchFound = match.matches();
+        if(!matchFound){
+            jLabel2.setText("Enter valid input data");
+        }else{
+            jLabel2.setText(null);
+        }
+    }//GEN-LAST:event_txtManufacturerNameKeyReleased
+
+    private void txtCarNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCarNameKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z0-9]{0,30}$");
+        Matcher match = pattern.matcher(txtCarName.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel3.setText("Enter valid input data");
+        }else{
+            jLabel3.setText(null);
+        }
+    }//GEN-LAST:event_txtCarNameKeyReleased
+
+    private void txtModelNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModelNameKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z0-9]{0,30}$");
+        Matcher match = pattern.matcher(txtModelName.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel4.setText("Enter valid input data");
+        }else{
+            jLabel4.setText(null);
+        }
+    }//GEN-LAST:event_txtModelNameKeyReleased
+
+    private void txtNumberOfSeatsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumberOfSeatsKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[1-9]{1,2}$");
+        Matcher match = pattern.matcher(txtNumberOfSeats.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel5.setText("Enter valid input data");
+        }else{
+            jLabel5.setText(null);
+        }
+    }//GEN-LAST:event_txtNumberOfSeatsKeyReleased
+
+    private void txtSerialNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerialNumberKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z0-9]{0,30}$");
+        Matcher match = pattern.matcher(txtSerialNumber.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel6.setText("Enter valid input data");
+        }else{
+            jLabel6.setText(null);
+        }
+    }//GEN-LAST:event_txtSerialNumberKeyReleased
+
+    private void txtCompanyNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCompanyNameKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z]{0,30}$");
+        Matcher match = pattern.matcher(txtCompanyName.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel7.setText("Enter valid input data");
+        }else{
+            jLabel7.setText(null);
+        }
+    }//GEN-LAST:event_txtCompanyNameKeyReleased
+
+    private void txtCityNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCityNameKeyReleased
+        // TODO add your handling code here:
+        Pattern pattern = Pattern.compile("^[a-zA-z]{0,30}$");
+        Matcher match = pattern.matcher(txtCityName.getText());
+        boolean matchFound = match.find();
+        if(!matchFound){
+            jLabel8.setText("Enter valid input data");
+        }else{
+            jLabel8.setText(null);
+        }
+    }//GEN-LAST:event_txtCityNameKeyReleased
+
+    private void btnAddCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCSVActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jFileChooser = new JFileChooser();
+        int returnVal = jFileChooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            readFromCSV(jFileChooser.getSelectedFile().getAbsolutePath());
+            //JOptionPane.showMessageDialog(null, "CSV successfully uploaded");
+        }
+    }//GEN-LAST:event_btnAddCSVActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddCSV;
+    private javax.swing.JButton btnCreateCar;
+    private javax.swing.ButtonGroup buttonGroupA;
+    private javax.swing.ButtonGroup buttonGroupMC;
+    private javax.swing.JRadioButton expired;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblCarName;
+    private javax.swing.JLabel lblCityName;
+    private javax.swing.JLabel lblCompanyName;
+    private javax.swing.JLabel lblMaintainanceCertificate;
+    private javax.swing.JLabel lblManufacturerName;
+    private javax.swing.JLabel lblModelName;
+    private javax.swing.JLabel lblNumberOfSeats;
+    private javax.swing.JLabel lblSerialNumber;
+    private javax.swing.JLabel lblYearOfManufacture;
+    private javax.swing.JRadioButton no;
+    private javax.swing.JTextField txtCarName;
+    private javax.swing.JTextField txtCityName;
+    private javax.swing.JTextField txtCompanyName;
+    private javax.swing.JTextField txtManufacturerName;
+    private javax.swing.JTextField txtModelName;
+    private javax.swing.JTextField txtNumberOfSeats;
+    private javax.swing.JTextField txtSerialNumber;
+    private com.toedter.calendar.JYearChooser txtYearOfManufacture;
+    private javax.swing.JRadioButton valid;
+    private javax.swing.JRadioButton yes;
+    // End of variables declaration//GEN-END:variables
+}
