@@ -267,7 +267,7 @@ public class MenuPanel extends javax.swing.JPanel {
             sum = sum + Integer.parseInt((String) cartTable.getValueAt(i, 2));
         }
         String address=addressTxt.getText();
-        restaurant.addOrder(restaurant.getName(), userAccount.getUsername(), null, items, String.valueOf(sum) , address);
+        restaurant.addOrder(restaurant.getName(), userAccount.getUsername(), null, items, String.valueOf(sum) , address, addressTxt1.getText());
         for(Customer cust:system.getCustomerDirectory().getListOfCustomers()){
             if(userAccount.getUsername().equals(cust.getUserNameOfCustomer())){
                 cust.addOrder(restaurant.getName(), userAccount.getUsername(), null, items, String.valueOf(sum) , address);

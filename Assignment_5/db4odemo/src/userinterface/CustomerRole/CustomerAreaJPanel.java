@@ -174,20 +174,20 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
         pastTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Order ID", "Restaurant Name", "Amount", "Status"
+                "Order ID", "Restaurant Name", "Amount"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -203,7 +203,6 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
             pastTbl.getColumnModel().getColumn(0).setResizable(false);
             pastTbl.getColumnModel().getColumn(1).setResizable(false);
             pastTbl.getColumnModel().getColumn(2).setResizable(false);
-            pastTbl.getColumnModel().getColumn(3).setResizable(false);
         }
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 370, 520, 97));
@@ -255,7 +254,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
               row[1] = menu.getNameOfRestaurant();
 
               row[2] = menu.getCost();
-              row[3] = menu.getStatus();
+//              row[3] = menu.getStatus();
               model.addRow(row);
              }
           }   

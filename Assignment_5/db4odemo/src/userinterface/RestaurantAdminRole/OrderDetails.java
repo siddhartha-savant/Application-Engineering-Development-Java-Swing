@@ -35,6 +35,7 @@ public class OrderDetails extends javax.swing.JPanel {
         this.account = account;
         this.order = order;
         this.system = system;
+        addressTxt1.setEnabled(false);
         populateTable();
     }
 
@@ -42,7 +43,7 @@ public class OrderDetails extends javax.swing.JPanel {
         jLabel1.setText("Order ID:"+order.getOrderID());
          DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
         model.setRowCount(0);
-        
+        addressTxt1.setText(order.getFeedback());
          
          Object[] row = new Object[3];
                 for(Dishes dish:order.getOrder()){
@@ -67,6 +68,8 @@ public class OrderDetails extends javax.swing.JPanel {
         BackBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         statusBtn = new javax.swing.JButton();
+        enterpriseLabel1 = new javax.swing.JLabel();
+        addressTxt1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 102, 102));
@@ -125,6 +128,18 @@ public class OrderDetails extends javax.swing.JPanel {
         });
         add(statusBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 400, 50));
 
+        enterpriseLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        enterpriseLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel1.setText("Customer Feedback:");
+        add(enterpriseLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 190, 90));
+
+        addressTxt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressTxt1ActionPerformed(evt);
+            }
+        });
+        add(addressTxt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, 260, 110));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/food-gbcc99b878_1280.png"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 880));
     }// </editor-fold>//GEN-END:initComponents
@@ -149,9 +164,15 @@ public class OrderDetails extends javax.swing.JPanel {
         
     }//GEN-LAST:event_statusBtnActionPerformed
 
+    private void addressTxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTxt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressTxt1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JTextField addressTxt1;
+    private javax.swing.JLabel enterpriseLabel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

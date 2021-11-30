@@ -52,8 +52,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree = new javax.swing.JTree();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        lblSelectedNode = new javax.swing.JLabel();
         btnManageCustomers = new javax.swing.JButton();
         btnManageRestaurments = new javax.swing.JButton();
         btnManageDeliveryMan = new javax.swing.JButton();
@@ -77,16 +75,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(51, 0, 51));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Selected Node:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
-
-        lblSelectedNode.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblSelectedNode.setForeground(new java.awt.Color(255, 255, 255));
-        lblSelectedNode.setText("<View_selected_node>");
-        jPanel2.add(lblSelectedNode, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
 
         btnManageCustomers.setBackground(new java.awt.Color(0, 0, 0));
         btnManageCustomers.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -152,10 +140,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeValueChanged
         
-        DefaultMutableTreeNode selectedNode= (DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
-        if(selectedNode!=null){
-            lblSelectedNode.setText(selectedNode.toString());
-        }
+//        DefaultMutableTreeNode selectedNode= (DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
+//        if(selectedNode!=null){
+//            lblSelectedNode.setText(selectedNode.toString());
+//        }
     }//GEN-LAST:event_jTreeValueChanged
 
 
@@ -163,13 +151,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnManageCustomers;
     private javax.swing.JButton btnManageDeliveryMan;
     private javax.swing.JButton btnManageRestaurments;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JTree jTree;
-    private javax.swing.JLabel lblSelectedNode;
     // End of variables declaration//GEN-END:variables
 }

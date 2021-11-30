@@ -80,7 +80,7 @@ public class Restaurant {
         listOfDishes.remove(menu);
     }
     
-    public void addOrder(String nameOfRestaurant, String nameOfCustomer, String deliveryMan, ArrayList<Dishes> Order, String cost, String deliveryAddress) {
+    public void addOrder(String nameOfRestaurant, String nameOfCustomer, String deliveryMan, ArrayList<Dishes> Order, String cost, String deliveryAddress, String feedback) {
         Order order = new Order();
         order.setOrderID(String.valueOf(id));
         order.setOrder(Order);
@@ -90,8 +90,10 @@ public class Restaurant {
         order.setDeliveryMan(deliveryMan);   
         order.setDeliveryAddress(deliveryAddress);
         order.setStatus("New Order");
+        order.setFeedback(feedback);
         listOfOrders.add(order);
         id++;
+        System.out.println(feedback);
     }
     
     @Override
